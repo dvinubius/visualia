@@ -8,3 +8,6 @@ Modular aggregation of several projects into 3 presentation galleries.
 - Multiple animations and memory optimization
 - Modular parts are easily embedded into any webpage and highly configurable
 - Some fun with algorithms
+
+
+See demo at http://dvinubius.thecompletewebhosting.com/projects/visualia
