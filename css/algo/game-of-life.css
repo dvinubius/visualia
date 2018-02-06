@@ -1,0 +1,91 @@
+:root {
+  --cell_width: 9;
+  --cell_height: 9;
+
+
+  --col-bg-wrapper-gol:hsla(39, 46%, 71%, 1);
+  --col-bg-grid-gol:hsla(36, 54%, 50%, 0.3);
+  /* --col-bg-grid-gol:hsl(216, 20%, 60%); */
+  --col-button-hover-gol: hsla(36, 60%, 50%, 0.5);
+  --col-hr: rgba(94, 67, 18, 0.5);
+
+  --cell-border: 1px solid hsla(39, 30%, 41%, 0.2);
+  --col-cell-active: hsl(36, 55%, 10%);
+}
+
+.game-wrapper-game-of-life {        
+  height: 100%;
+  width: 100%; 
+  padding-top: 40px;
+  text-align: center;  
+  background-color: var(--col-bg-wrapper-gol);  
+}
+
+.grid-game-of-life   {  
+  border-radius: 5px;
+  display: inline-block;
+  margin: auto;
+  background-color: var(--col-bg-grid-gol);
+  box-shadow: 0 4px 4px 0px rgba(0, 0, 0, 0.411);
+
+  transform: scale(0.9, 0.9) translate(0, -10px);
+}      
+
+.game-wrapper-game-of-life hr {
+  border-color:var(--col-hr);
+}
+
+.gol-row {
+  height: calc(var(--cell_height) * 1px);
+  line-height: 1px;
+  font-size: 1px;
+}
+
+.gol-cell {
+  width: calc(var(--cell_width) * 1px);
+  height: calc(var(--cell_height) * 1px);
+  display:inline-block;
+  box-sizing: border-box;
+  border: var(--cell-border);
+  /* box-shadow: 0 0 0 0 black inset;
+  transition: box-shadow 0.05s; 
+  Just doesn't look good */
+}
+.gol-cell:hover {
+  cursor: pointer;
+}
+
+.live {
+  box-shadow: 0 0 0 6px var(--col-cell-active) inset;
+}
+
+.game-wrapper-game-of-life > button {
+  background-color: transparent;
+
+  font-size: 1.2em;
+  min-width: 100px;
+  padding: 5px 10px;
+  margin: 0 10px;
+  border: 1px solid rgb(94, 67, 18);
+  border-radius: 5px;
+  box-shadow: 0 1px 1px 0px rgba(0, 0, 0, 0.411);
+
+  transition: transform 0.1s ease-in-out, background-color 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+}
+.game-wrapper-game-of-life > button:hover {
+  background-color: var(--col-button-hover-gol);
+  cursor: pointer;
+}
+.game-wrapper-game-of-life > button:active {
+  transform: scale(0.9);
+  box-shadow: none;
+}
+.game-wrapper-game-of-life > button:focus {
+  outline: none;
+}
+.game-wrapper-game-of-life > button:disabled {
+  color: rgb(94, 67, 18);
+  opacity: 0.5;
+  pointer-events: none;
+}
+

@@ -1,0 +1,220 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --col-main-bg:hsl(268, 3%, 19%);
+  --col-main-text: hsla(88, 53%, 90%, 1);
+  --col-banner-bg:var(--col-main-bg);
+  --col-banner-text:var(--col-main-text);
+  --shell-col-bg: hsl(268, 3%, 25%);
+  --shell-col-text:var(--col-banner-text);  
+  --shell-borders:2px ridge hsla(7, 80%, 50%, 0.6);
+  --col-nav-text-hover: hsla(7, 80%, 59%, 0.8);
+  
+  --exhibit-content-shadow: 0 4px 4px 0px rgb(39, 39, 39);
+  --exhibit-content-border-radius:20px;
+
+  --max-width-shell: 1600px;
+
+
+  --nav-height: 55px;
+  --nav-shadow: 0 0 5px 0px rgb(31, 31, 31);
+
+  --footer-opacity: 0.8;
+  --col-footer-bg:var(--shell-col-bg);
+}
+
+body, html {
+  width:100%;
+	height:100%;
+  background:var(--col-main-bg);
+}
+
+html{
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  scroll-behavior: smooth;
+}
+
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/* NAVBAR */
+nav {
+  position: fixed;
+  left: 0;
+  top: 0;
+  
+  z-index: 400;  
+  width: 100%;
+  height: var(--nav-height);  
+  background-color: var(--shell-col-bg);
+
+  border-bottom: var(--shell-borders);
+  box-shadow: var(--nav-shadow);
+  opacity: 0.95;
+
+  padding: 0 5rem;  
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+nav a {
+  position: relative;
+  
+
+  cursor:pointer;
+  text-decoration: none;
+  /* text-transform: uppercase; */
+  letter-spacing: 0.09em;
+  font-size: 1.3em;
+  margin: auto 5rem;  
+  text-align: center; 
+  padding: 5px 10px;
+  color: var(--shell-col-text);
+  opacity: 0.9;
+  border-radius: 3px;
+
+  transition: background-color 0.1s ease-in-out, box-shadow 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+nav a:hover {
+  /* background-color: hsla(7, 100%, 34%, 0.3);
+  box-shadow: 0 0 4px 4px hsla(7, 100%, 34%, 0.3); */
+  color: var(--col-nav-text-hover);
+}
+nav a:nth-child(3) {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* BANNER */
+
+.banner {
+  background-color: var(--col-banner-bg);
+  width: 100vw;
+  /* max-width: var(--max-width-shell); */
+  height: 100vh;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  color: var(--col-banner-text);
+  border-bottom: var(--shell-borders);
+
+  position: relative;
+  z-index: 100;
+  margin: auto;
+}
+
+.banner {
+  font-size: 1.5rem;
+}
+.banner > h1, .banner > h2 {
+  margin: 40px;
+  padding: initial;
+  letter-spacing: 0.1em;
+  user-select: none;
+  opacity: 0.8;
+}
+
+.parallax-wrapper {
+  height: 400px;
+  width: 100vw;
+  /* max-width: var(--max-width-shell); */
+  overflow: hidden;
+  position: relative;
+
+  margin: auto;
+}
+
+.part {
+  width: 100vw;
+  /* max-width: var(--max-width-shell); */
+  height: 1100px;
+  background-color: white;
+  position: absolute;
+  z-index: 10;
+
+  top: -50%;
+
+  opacity: 1;
+}
+
+.exhibit {
+  width: 100vw;
+  /* max-width: var(--max-width-shell); */
+  height: 1600px;
+  background-color: var(--col-main-bg);
+  color: var(--col-main-text);
+
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+
+  border-top: var(--shell-borders);
+  border-bottom: var(--shell-borders);
+
+  position: relative;
+  z-index: 100;
+  margin: auto;
+
+  text-align: center;
+  user-select: none;
+}
+
+
+.exhibit > h3 {
+  position: absolute;
+  top: 150px;
+  opacity: 0.5;
+}
+
+.exhibit > h1 {
+  position: absolute;
+  top: 250;
+  opacity: 0.85;
+}
+
+.exhibit-content {
+  width: 90%;
+  max-width: 1200px;
+  height: 800px;
+  max-height: 90vh;
+  /* so we can use a border if necessary, without affecting the inside.
+    inside there will be the project div, having the same dimensions,
+    but havgin box-sizing set to border-box  */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--exhibit-content-border-radius);
+  border: var(--exhibit-content-border);  
+  box-shadow: var(--exhibit-content-shadow);
+  position: relative;
+}
+
+
+footer {
+  height: 60px;
+  /* border-top: var(--shell-borders); */
+  background-color: var(--col-footer-bg);
+  color: var(--shell-col-text);
+  opacity: var(--footer-opacity);
+  user-select: none;
+}
+
+footer > p {
+  padding: 20px;
+  font-weight: 100;
+  text-align: center;
+}

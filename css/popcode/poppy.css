@@ -1,0 +1,145 @@
+:root {
+  --radius-eraser-div-basic:30;
+  --radius-eraser-div-min:15;
+  --radius-eraser-div-max:100;
+  --radius-eraser-div-shadowadd:25;
+  --opacity-eraser-div-initial:0;
+  /* the div is not visible at all initially */
+  --opacity-eraser-div-max:0.4;
+  --radius-cursor-div-basic:15;
+  /* fallback value of the cursor radius. is calculated from eraser-div-radius at runtime */
+  --opacity-cursor-div-initial:0;
+  /* the div has maximum opacity initially */
+  --opacity-cursor-div-max:0.6;
+
+  --poppy-main-border-radius:10px;
+
+  --col-control-panel-border: rgba(245, 245, 220, 0.1);
+  --col-buttons-border-highlight: rgba(245, 245, 220, 0.3);
+  --col-buttons-border: rgba(245, 245, 220, 0);
+}
+
+/* the canvas element */
+.poppy-main {
+  cursor: none;
+  border-radius: var(--poppy-main-border-radius);
+}
+
+.control-panel {
+  position: absolute;
+  padding: 0 80px;
+  height: 60px;
+  bottom: -60px;
+
+  background-color:  rgba(245, 245, 220, 0);
+  border: 1px solid var(--col-control-panel-border);
+  border-radius: 0 0 20px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: background-color ease-in-out 0.1s;
+}
+.control-panel:hover {
+  background-color:  rgba(200, 80, 80, 0.5);
+}
+
+.btn-popping {
+  font-size: 1.1em;
+  font-weight: 500;
+  max-width: 46px;
+  height: 44px;
+  /* margin-top: 0; */
+  text-align: center;
+  z-index: 300;
+  padding: 0;
+  overflow: visible;
+
+  /* background-color: rgb(245, 245, 220); */
+  background-color: transparent !important;
+
+  border: 1px solid var(--col-buttons-border);
+  /* border: none; */
+  /* border-radius: 10px; */
+  border-radius: 50%;
+
+  transition: opacity 0.4s;
+}
+
+.btn-popping img {
+  display: inline-block;
+  width: 40px;
+  margin: auto;
+  pointer-events: none;
+}
+
+.btn-popping:focus {
+  outline: none;
+}
+.btn-popping:active {
+  opacity: 0.1;
+}
+.btn-popping:hover {
+  cursor: pointer;
+  border: 1px solid var(--col-buttons-border-highlight);
+}
+
+.btn-popping.on {
+  color: rgb(112, 95, 95);
+}
+.btn-popping.off {
+  color: rgb(71, 167, 84);
+}
+
+
+#eraser-div {
+  pointer-events: none;
+  /* so that mousemove handling still works in parent container */
+
+  --radius-used: var(--radius-eraser-div-basic);
+  --opacity-used: var(--opacity-eraser-div-initial);
+  --mouse-pos-x:-1000;
+  --mouse-pos-y:-1000;
+
+  width: calc(var(--radius-used) * 2px);
+  height: calc(var(--radius-used) * 2px);
+  border: 2px groove grey;
+  box-shadow: 0 0 12px 25px rgb(228, 95, 95) inset,
+              0 0 10px calc(var(--radius-eraser-div-shadowadd)*1px) rgb(245, 180, 180);
+  /* box-shadow: 0 0 10px var(--radius-eraser-div-shadowadd) rgb(167, 0, 0); */
+  border-radius: 50%;
+
+
+  position: absolute;
+  --translate: calc(var(--radius-used) * 1px);
+  top: calc(var(--mouse-pos-y) * 1px - var(--translate));
+  left: calc(var(--mouse-pos-x) * 1px - var(--translate));
+
+  opacity: var(--opacity-used);
+  transition: opacity 0.3s ease-in-out;
+}
+
+#cursor-div {
+  pointer-events: none;
+  /* so that mousemove handling still works in parent container */
+
+  --radius-used: var(--radius-cursor-div-basic);
+  --opacity-used: var(--opacity-cursor-div-initial);
+  --mouse-pos-x:-1000;
+  --mouse-pos-y:-1000;
+
+  width: calc(var(--radius-used) * 2px);
+  height: calc(var(--radius-used) * 2px);
+  border: 2px groove grey;
+  box-shadow: 0 0 4px 8px rgb(185, 185, 185) inset, 0 0 6px 12px rgb(201, 199, 199);
+  border-radius: 50%;
+
+  position: absolute;
+  --translate: calc(var(--radius-used) * 1px);
+  top: calc(var(--mouse-pos-y) * 1px - var(--translate));
+  left: calc(var(--mouse-pos-x) * 1px - var(--translate));
+
+  opacity: var(--opacity-used);
+  transition: opacity 0.1s ease-in-out;
+}

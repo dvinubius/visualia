@@ -1,0 +1,86 @@
+:root {  
+  --bubbles-main-border-radius:10px;
+
+  --col-control-panel-border: rgba(245, 245, 220, 0.1);
+  --col-buttons-border-highlight: rgba(245, 245, 220, 0.3);
+  --col-buttons-border: rgba(245, 245, 220, 0);
+}
+
+
+/* the canvas element */
+.bubbles-main {
+  opacity: 1;         
+  background-color: beige;  
+  border-radius: var(--bubbles-main-border-radius);
+  cursor: crosshair;
+}
+
+.control-panel {
+  position: absolute;
+  padding: 0 80px;
+  height: 60px;
+  bottom: -60px;
+
+  background-color:  rgba(245, 245, 220, 0);
+  border: 1px solid var(--col-control-panel-border);
+  border-radius: 0 0 20px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: background-color ease-in-out 0.1s;
+}
+.control-panel:hover {
+  background-color:  rgba(200, 80, 80, 0.5);
+}
+
+.btn-animate {
+  font-size: 1.1em;
+  font-weight: 500;
+  max-width: 46px;
+  height: 44px;
+  /* margin-top: 0; */
+  text-align: center;  
+  z-index: 300;
+  padding: 0;
+  overflow: visible;
+
+  /* background-color: rgb(245, 245, 220); */
+  background-color: transparent !important;
+  
+  border: 1px solid var(--col-buttons-border);
+  /* border: none; */
+  /* border-radius: 10px; */
+  border-radius: 50%;
+
+  transition: opacity 0.4s;
+}
+
+.btn-animate img {
+  display: inline-block;
+  width: 40px;
+  margin: auto;
+  pointer-events: none;
+}
+
+.btn-animate:focus {
+  outline: none;
+}
+.btn-animate:active {
+  opacity: 0.1;
+}
+.btn-animate:hover {
+  cursor: pointer;
+  border: 1px solid var(--col-buttons-border-highlight);
+}
+
+.btn-animate.on {
+  color: rgb(112, 95, 95);  
+}
+.btn-animate.off {
+  color: rgb(71, 167, 84);  
+}
+
+
+
