@@ -8,7 +8,7 @@ const CONFIG1 = {
       }
     },
     "color": {
-      "value": "#e59319"
+      "value": "#001A57" // duke blue
     },
     "shape": {
       "type": "polygon",
@@ -134,7 +134,7 @@ const CONFIG_ELIFE = {
 
 let parallaxDivs; // array of DOM element objects
 let particlesDiv; // $ object
-let paraFactor = -0.4; // use negative values starting from 0 (for no parallax at all)
+let paraFactor = -0.3; // use negative values starting from 0 (for no parallax at all)
 
 
 let exhibits = []; // where all the specific project objects will be
@@ -185,7 +185,9 @@ function handleScroll(e) {
     let displacement = scrolledIntoView*paraFactor;
 
     // change particles div position according to displacement
-    $(particlesDiv).css('top', displacement+'px');    
+    // $(particlesDiv).css('top', displacement+'px');    
+    $(particlesDiv).css('transform', `translate3d(0, `+displacement+`px, 0)`);    
+    // document.documentElement.style.setProperty('--parallax-offset', displacement);
   } else { 
     // for performance reasons...
     if (particlesDiv.parentNode) {

@@ -21,18 +21,6 @@
   --footer-opacity: 0.8;
   --col-footer-bg:hsl(268, 3%, 12%);
 
-  /* --duration-appear-cover: 3.5s;
-  --duration-wait-cover: 0.1s;
-  --width-cover: 24vw;
-  --width-cover-move: 12px;
-  --col-bg-cover:hsl(268, 9%, 20%);
-  --opacity-cover: 0.3;
-  --border-cover: 3px ridge hsl(0, 0%, 50%); */
-  /* --border-radius-cover: 35%;
-  --transform-cover: translate(170px, 0); */
-  /* --border-radius-cover: 0;
-  --transform-cover: none; */
-
   --col-img-border: rgba(10, 10, 3, 0.3);
   --col-img-border-hover: beige;
 
@@ -176,34 +164,6 @@ nav a:hover {
   /* due to presence of navbar */
   transform: translateY(calc(var(--nav-height) / 2));
 }
-
-/* .banners-cover {
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: calc(100vh - var(--shell-border-width));
-
-  z-index: 500;
-  background-color: var(--col-bg-cover);
-  opacity: var(--opacity-cover);
-  border-left: var(--border-cover);  
-  animation: slide-in var(--duration-appear-cover) ease-in-out var(--duration-appear-ray), 
-             wait var(--duration-wait-cover) linear calc(var(--duration-appear-ray) + var(--duration-appear-cover)),
-             shake 2s linear calc(var(--duration-appear-ray) + var(--duration-appear-cover) + var(--duration-wait-cover)) infinite;
-}
-@keyframes slide-in {
-  0% {width: 0;}
-  100% {width: var(--width-cover);}
-}
-@keyframes wait {  
-  0% {width: var(--width-cover);}
-  100% {width: var(--width-cover); border-radius: var(--border-radius-cover); transform: var(--transform-cover);}
-}
-@keyframes shake {
-  0%, 50%, 100% {width: var(--width-cover); border-radius: var(--border-radius-cover);transform: var(--transform-cover);}
-  25% {width: calc(var(--width-cover) + var(--width-cover-move)); border-radius: var(--border-radius-cover);transform: var(--transform-cover);}
-  75% {width: calc(var(--width-cover) - var(--width-cover-move)); border-radius: var(--border-radius-cover);transform: var(--transform-cover);}
-} */
 
 /* ====== IMAGES ON THE RIGHT  ====== */
 .banner-overlay-images {

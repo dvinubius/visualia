@@ -5,6 +5,8 @@
 }
 
 :root {
+  --parallax-offset: 0;
+
   --col-main-bg:hsl(268, 3%, 16%);
   --col-main-text: hsla(88, 53%, 90%, 1);
   --col-banner-bg:var(--col-main-bg);
@@ -145,6 +147,7 @@ nav a:nth-child(2) {
   z-index: 10;
 
   top: -50%;
+  /* transform: translate3d(0, calc(var(--parallax-offset) * 1px), 0); */
 
   opacity: 1;
 }
