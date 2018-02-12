@@ -8,7 +8,9 @@ const CONFIG1 = {
       }
     },
     "color": {
+      // "value": "#F00"
       "value": "#F00"
+
     },
     "shape": {
       "type": "circle",
@@ -26,7 +28,7 @@ const CONFIG1 = {
       }
     },
     "opacity": {
-      "value": 0.2,
+      "value": 0.1,
       "random": false,
       "anim": {
         "enable": false,
@@ -48,8 +50,8 @@ const CONFIG1 = {
     "line_linked": {
       "enable": true,
       "distance": 120,
-      "color": "#001100",
-      "opacity": 0.1,
+      "color": "#b8b42d",
+      "opacity": 0.4,
       "width": 1
     },
     "move": {
@@ -205,6 +207,7 @@ let exhibits = []; // where all the specific project objects will be
 // window resize and scroll events will trigger hold and go for the exhibit sections, but in a rebounce-fashion
 let wannaGoTimeout = null;
 let timeoutValue = 5;
+let scrolled = false; // keeps track of scrolls since the last animationFrame
 
 
 window.onload = function() {
@@ -219,63 +222,82 @@ window.onload = function() {
   // autostart off = for performance reasons (go only when on display - scrollhandled)
   exhibits.push(project1);  
 
-   // project 2 init 
-   let project2 = bubblesJS('exhibit-content-2', CONFIG_BUBBLES_2);
-   // autostart off = for performance reasons (go only when on display - scrollhandled)
-   exhibits.push(project2);
+  // project 2 init 
+  let project2 = bubblesJS('exhibit-content-2', CONFIG_BUBBLES_2);
+  // autostart off = for performance reasons (go only when on display - scrollhandled)
+  exhibits.push(project2);
 
-   // project 3 init 
-   let project3 = bubblesCardJS('exhibit-content-3', CONFIG_BUBBLES_CARD);
-   // autostart off = for performance reasons (go only when on display - scrollhandled)
-   exhibits.push(project3);
+  // project 3 init 
+  let project3 = bubblesCardJS('exhibit-content-3', CONFIG_BUBBLES_CARD);
+  // autostart off = for performance reasons (go only when on display - scrollhandled)
+  exhibits.push(project3);
 
   // listener for scrolling
   window.onscroll = handleScroll;
+  // scrollhandling in an animation loop
+  animateScroll();
 }
 
-// DO THIS ON EVERY SCROLL EVENT
-function handleScroll(e) {
+function handleScroll() {
+  scrolled = true;
+}
 
-  // HANDLE PARALLAX
-
-  // get dom element of parallaxWrapper currently in view
-  let toParallax = getParallaxSectionInView();
-
-  if (toParallax) {
-    // put particles canvas into the right wrapper after removing it from actual parent
-    if (particlesDiv.parentNode) {
-      particlesDiv.parentNode.removeChild(particlesDiv);
-    }
-    toParallax.appendChild(particlesDiv);
-
-    // calculate the parallax displacement
-    let scrolledIntoView = $(window).scrollTop() + $(window).height() - $(toParallax).offset().top;
-    let displacement = scrolledIntoView*paraFactor;
-
-    // change particles div position according to displacement
-    // $(particlesDiv).css('top', displacement+'px');   
-    $(particlesDiv).css('transform', `translate3d(0, `+displacement+`px, 0)`);  
-  } else { 
-    // for performance reasons...
-    if (particlesDiv.parentNode) {
-      particlesDiv.parentNode.removeChild(particlesDiv);
-    }
-  }
-
-
-  // HANDLE EXHIBITS
-  let toPresent = getExhibitInView(false);
-  if (toPresent) {    
-    if (wannaGoTimeout) {
-      clearTimeout(wannaGoTimeout);      
-    }
-    wannaGoTimeout = setTimeout(toPresent.go.bind(toPresent, true), timeoutValue);
+// DO THIS ON EVERY ANIMATION FRAME
+function animateScroll(e) {
+  if (!scrolled) {
+    // nothing to do, return in loop
+    requestAnimationFrame(animateScroll);
   } else {
-    // stop all, making sure the last one running stops
-    exhibits.forEach(p => p.hold(true));
-    // clear any timeout
-    clearTimeout(wannaGoTimeout);
+    // something to do - hanlde the scroll changes
+    scrolled = false;
+
+    // HANDLE PARALLAX
+
+    // get dom element of parallaxWrapper currently in view
+    let toParallax = getParallaxSectionInView();
+
+    if (toParallax) {
+      // put particles canvas into the right wrapper after removing it from actual parent
+      if (particlesDiv.parentNode) {
+        particlesDiv.parentNode.removeChild(particlesDiv);
+      }
+      toParallax.appendChild(particlesDiv);
+
+      // calculate the parallax displacement
+      let scrolledIntoView = $(window).scrollTop() + $(window).height() - $(toParallax).offset().top;
+      let displacement = scrolledIntoView*paraFactor;
+
+      // change particles div position according to displacement
+      // $(particlesDiv).css('top', displacement+'px');   
+      $(particlesDiv).css('transform', `translate3d(0, `+displacement+`px, 0)`);  
+    } else { 
+      // for performance reasons...
+      if (particlesDiv.parentNode) {
+        particlesDiv.parentNode.removeChild(particlesDiv);
+      }       
+    }
+
+
+    // HANDLE EXHIBITS
+    let toPresent = getExhibitInView(false);
+    if (toPresent) {    
+      if (wannaGoTimeout) {
+        clearTimeout(wannaGoTimeout);      
+      }
+      wannaGoTimeout = setTimeout(toPresent.go.bind(toPresent, true), timeoutValue);
+    } else {
+      // stop all, making sure the last one running stops
+      exhibits.forEach(p => p.hold(true));
+      // clear any timeout
+      clearTimeout(wannaGoTimeout);
+    }
+
+    // if this function is used as eventhandler for 'DOMContentLoaded',
+    // here we call this to start a loop.
+    requestAnimationFrame(animateScroll);
   }
+  
+  
 }
 
 // find the parallaxWrapper that is currently in view (if any)

@@ -193,7 +193,7 @@ const CONFIG_POPPY_3 = {
 
 let parallaxDivs; // array of DOM element objects
 let particlesDiv; // $ object
-let paraFactor = 0; // use negative values starting from 0 (for no parallax at all)
+let paraFactor = -0.2; // use negative values starting from 0 (for no parallax at all)
 
 
 let exhibits = []; // where all the specific project objects will be
