@@ -28,7 +28,7 @@ const CONFIG1 = {
       }
     },
     "opacity": {
-      "value": 0.1,
+      "value": 0.25,
       "random": false,
       "anim": {
         "enable": false,
