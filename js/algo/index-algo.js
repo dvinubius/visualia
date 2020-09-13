@@ -116,7 +116,7 @@ const CONFIG1 = {
 };
 const CONFIG_GAME_OF_LIFE = {
   config: {
-    tickTime: 40, 
+    tickTime: 17, 
     generateSome: true,
     snakeMode: true,
     gridSize: 70 
@@ -143,6 +143,7 @@ let exhibits = []; // where all the specific project objects will be
 // window resize and scroll events will trigger hold and go for the exhibit sections, but in a rebounce-fashion
 let wannaGoTimeout = null;
 let timeoutValue = 15;
+let scrolled = false; // keeps track of scrolls since the last animationFrame
 
 
 window.onload = function() {
@@ -165,33 +166,45 @@ window.onload = function() {
   window.onscroll = handleScroll;
 }
 
-// DO THIS ON EVERY SCROLL EVENT
-function handleScroll(e) {
+function handleScroll() {
+  scrolled = true;
+  // animate via Greensock
+  animateScrollGreenSock();
+}
 
-  // HANDLE PARALLAX
+// animate via greensock
+function animateScrollGreenSock() {
+  if (!scrolled) {
+    // nothing to do, return
+  } else {
+    // something to do - hanlde the scroll changes
+    scrolled = false;
+    // HANDLE PARALLAX
 
-  // get dom element of parallaxWrapper currently in view
-  let toParallax = getParallaxSectionInView();
+    // get dom element of parallaxWrapper currently in view
+    let toParallax = getParallaxSectionInView();
 
-  if (toParallax) {
-    // put particles canvas into the right wrapper after removing it from actual parent
-    if (particlesDiv.parentNode) {
-      particlesDiv.parentNode.removeChild(particlesDiv);
-    }
-    toParallax.appendChild(particlesDiv);
+    if (toParallax) {
+      // put particles canvas into the right wrapper after removing it from actual parent
+      if (particlesDiv.parentNode) {
+        particlesDiv.parentNode.removeChild(particlesDiv);
+      }
+      toParallax.appendChild(particlesDiv);
 
-    // calculate the parallax displacement
-    let scrolledIntoView = $(window).scrollTop() + $(window).height() - $(toParallax).offset().top;
-    let displacement = scrolledIntoView*paraFactor;
+      // calculate the parallax displacement
+      let scrolledIntoView = $(window).scrollTop() + $(window).height() - $(toParallax).offset().top;
+      let displacement = scrolledIntoView*paraFactor;
 
-    // change particles div position according to displacement
-    // $(particlesDiv).css('top', displacement+'px');    
-    $(particlesDiv).css('transform', `translate3d(0, `+displacement+`px, 0)`);    
-    // document.documentElement.style.setProperty('--parallax-offset', displacement);
-  } else { 
-    // for performance reasons...
-    if (particlesDiv.parentNode) {
-      particlesDiv.parentNode.removeChild(particlesDiv);
+      // use greensock to move particles div according to displacement   
+      TweenMax.to(particlesDiv, .1, {
+        y: displacement,
+        overwrite: 'all'
+      });
+    } else { 
+      // for performance reasons...
+      if (particlesDiv.parentNode) {
+        particlesDiv.parentNode.removeChild(particlesDiv);
+      }
     }
   }
 

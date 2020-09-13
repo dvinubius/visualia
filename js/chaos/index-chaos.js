@@ -234,19 +234,19 @@ window.onload = function() {
 
   // listener for scrolling
   window.onscroll = handleScroll;
-  // scrollhandling in an animation loop
-  animateScroll();
 }
 
 function handleScroll() {
   scrolled = true;
+  // animate via Greensock
+  animateScrollGreenSock();
 }
 
-// DO THIS ON EVERY ANIMATION FRAME
-function animateScroll(e) {
+
+// animate via greensock
+function animateScrollGreenSock(e) {
   if (!scrolled) {
-    // nothing to do, return in loop
-    requestAnimationFrame(animateScroll);
+    // nothing to do, return
   } else {
     // something to do - hanlde the scroll changes
     scrolled = false;
@@ -267,9 +267,11 @@ function animateScroll(e) {
       let scrolledIntoView = $(window).scrollTop() + $(window).height() - $(toParallax).offset().top;
       let displacement = scrolledIntoView*paraFactor;
 
-      // change particles div position according to displacement
-      // $(particlesDiv).css('top', displacement+'px');   
-      $(particlesDiv).css('transform', `translate3d(0, `+displacement+`px, 0)`);  
+      // use greensock to move particles div according to displacement   
+      TweenMax.to(particlesDiv, 0.1, {
+        y: displacement,
+        overwrite: 'all'
+      });
     } else { 
       // for performance reasons...
       if (particlesDiv.parentNode) {
@@ -291,10 +293,6 @@ function animateScroll(e) {
       // clear any timeout
       clearTimeout(wannaGoTimeout);
     }
-
-    // if this function is used as eventhandler for 'DOMContentLoaded',
-    // here we call this to start a loop.
-    requestAnimationFrame(animateScroll);
   }
   
   

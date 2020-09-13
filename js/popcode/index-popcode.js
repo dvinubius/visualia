@@ -117,7 +117,7 @@ const CONFIG1 = {
 const CONFIG_POPPY_1 = {
   "config": {
     "autoStart": false,
-    "genTimeFrame": 50, // average circle popping rate (ms) - min. is 50. For faster rates, set poppers to values > 1.
+    "genTimeFrame": 45, // average circle popping rate (ms) - min. is 50. For faster rates, set poppers to values > 1.
     "poppers": 5, // set to more than 1 for multiplying popping rate given by genTimeFrame
     "freezeTime": 1000, // how long to suspend popping on mouse mouve events (ms)
     "distort": false, // draw any distorted circles?
@@ -142,7 +142,7 @@ const CONFIG_POPPY_1 = {
 const CONFIG_POPPY_2 = {
   "config": {
     "autoStart": false,
-    "genTimeFrame": 50, // average circle popping rate (ms) - min. is 50. For faster rates, set poppers to values > 1.
+    "genTimeFrame": 40, // average circle popping rate (ms) - min. is 50. For faster rates, set poppers to values > 1.
     "poppers": 2, // set to more than 1 for multiplying popping rate given by genTimeFrame
     "freezeTime": 1000, // how long to suspend popping on mouse mouve events (ms)
     "distort": false, // draw any distorted circles?
@@ -167,7 +167,7 @@ const CONFIG_POPPY_2 = {
 const CONFIG_POPPY_3 = {
   "config": {
     "autoStart": false,
-    "genTimeFrame": 100, // average circle popping rate (ms) - min. is 50. For faster rates, set poppers to values > 1.
+    "genTimeFrame": 40, // average circle popping rate (ms) - min. is 50. For faster rates, set poppers to values > 1.
     "poppers": 1, // set to more than 1 for multiplying popping rate given by genTimeFrame
     "freezeTime": 1000, // how long to suspend popping on mouse mouve events (ms)
     "distort": true, // draw any distorted circles?
@@ -202,6 +202,7 @@ let exhibits = []; // where all the specific project objects will be
 // window resize and scroll events will trigger hold and go for the exhibit sections, but in a rebounce-fashion
 let wannaGoTimeout = null;
 let timeoutValue = 500;
+let scrolled = false; // keeps track of scrolls since the last animationFrame
 
 
 window.onload = function() {
@@ -228,32 +229,46 @@ window.onload = function() {
   window.onscroll = handleScroll;
 }
 
-// DO THIS ON EVERY SCROLL EVENT
-function handleScroll(e) {
+function handleScroll() {
+  scrolled = true;
+  // animate via Greensock
+  animateScrollGreenSock();
+}
 
-  // HANDLE PARALLAX
 
-  // get dom element of parallaxWrapper currently in view
-  let toParallax = getParallaxSectionInView();
-
-  if (toParallax) {
-    // put particles canvas into the right wrapper after removing it from actual parent
-    if (particlesDiv.parentNode) {
-      particlesDiv.parentNode.removeChild(particlesDiv);
-    }
-    toParallax.appendChild(particlesDiv);
-
-    // calculate the parallax displacement
-    let scrolledIntoView = $(window).scrollTop() + $(window).height() - $(toParallax).offset().top;
-    let displacement = scrolledIntoView*paraFactor;
-
-    // change particles div position according to displacement
-    // $(particlesDiv).css('top', displacement+'px');
-    $(particlesDiv).css('transform', `translate3d(0, `+displacement+`px, 0)`);  
+// animate via greensock
+function animateScrollGreenSock() {
+  if (!scrolled) {
+    // nothing to do, return
   } else {
-    // for performance reasons...
-    if (particlesDiv.parentNode) {
-      particlesDiv.parentNode.removeChild(particlesDiv);
+    // something to do - hanlde the scroll changes
+    scrolled = false;
+    // HANDLE PARALLAX
+
+    // get dom element of parallaxWrapper currently in view
+    let toParallax = getParallaxSectionInView();
+
+    if (toParallax) {
+      // put particles canvas into the right wrapper after removing it from actual parent
+      if (particlesDiv.parentNode) {
+        particlesDiv.parentNode.removeChild(particlesDiv);
+      }
+      toParallax.appendChild(particlesDiv);
+
+      // calculate the parallax displacement
+      let scrolledIntoView = $(window).scrollTop() + $(window).height() - $(toParallax).offset().top;
+      let displacement = scrolledIntoView*paraFactor;
+
+      // use greensock to move particles div according to displacement   
+      TweenMax.to(particlesDiv, .1, {
+        y: displacement,
+        overwrite: 'all'
+      });
+    } else {
+      // for performance reasons...
+      if (particlesDiv.parentNode) {
+        particlesDiv.parentNode.removeChild(particlesDiv);
+      }
     }
   }
 
