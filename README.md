@@ -10,4 +10,4 @@ Modular aggregation of several projects into 3 presentation galleries.
 - Some fun with algorithms
 
 
-See demo at http://dvinubius.thecompletewebhosting.com/projects/visualia
+Demo: https://visualia.vercel.app
